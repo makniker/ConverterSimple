@@ -1,4 +1,4 @@
-package com.example.convertersimple.ui.features.converter
+package com.example.convertersimple.features.convert.ui
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
