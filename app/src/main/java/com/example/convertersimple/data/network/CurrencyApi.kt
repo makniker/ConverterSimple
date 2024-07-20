@@ -5,7 +5,11 @@ import retrofit2.http.Query
 
 interface CurrencyApi {
     @GET("currencies")
-    fun getCurrenciesList(): CurrenciesList
+    suspend fun getCurrenciesList(): Result<CurrenciesList>
+
     @GET("latest")
-    fun getExchangeRate(@Query("base_currency") base: String, @Query("currencies") requestCurrency: String): ExchangeRate
+    suspend fun getExchangeRate(
+        @Query("base_currency") base: String,
+        @Query("currencies") requestCurrency: String
+    ): Result<ExchangeRate>
 }

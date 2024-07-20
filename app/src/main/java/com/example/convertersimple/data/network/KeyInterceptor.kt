@@ -4,11 +4,10 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 
-class KeyInterceptor: Interceptor {
+class KeyInterceptor(private val apiKey: String): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val originalRequest = chain.request()
-        val modifiedRequest = originalRequest.newBuilder()
-            .addHeader("apikey", "fca_live_IYltIYuAvGsjIZjjycLEYbx504lWT5QBnO4PrLE3")
+        val modifiedRequest = chain.request().newBuilder()
+            .addHeader("apikey", apiKey)
             .build()
         return chain.proceed(modifiedRequest)
     }

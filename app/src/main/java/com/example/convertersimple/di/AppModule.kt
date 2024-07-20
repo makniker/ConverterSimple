@@ -22,7 +22,7 @@ object AppModule {
     fun provideCurrencyApi(): CurrencyApi {
         return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL).client(OkHttpClient.Builder().apply {
-                addInterceptor(KeyInterceptor())
+                addInterceptor(KeyInterceptor("fca_live_IYltIYuAvGsjIZjjycLEYbx504lWT5QBnO4PrLE3"))
             }.build()).build().create(CurrencyApi::class.java)
     }
 
