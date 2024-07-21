@@ -16,7 +16,8 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "API_KEY", "\"API_KEY\"")
+        //Если бы не тестовое, то лежало бы в gradle.properties
+        buildConfigField("String", "API_KEY", "\"fca_live_IYltIYuAvGsjIZjjycLEYbx504lWT5QBnO4PrLE3\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

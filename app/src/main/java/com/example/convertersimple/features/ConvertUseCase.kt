@@ -1,4 +1,4 @@
-package com.example.convertersimple.features.convert
+package com.example.convertersimple.features
 
 import com.example.convertersimple.data.CurrencyRepository
 import javax.inject.Inject

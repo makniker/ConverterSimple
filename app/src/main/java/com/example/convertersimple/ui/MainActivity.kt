@@ -12,9 +12,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.convertersimple.features.convert.ui.ConverterScreen
-import com.example.convertersimple.features.convert.ui.ConverterViewModel
-import com.example.convertersimple.features.convert.ui.ResultScreen
+import com.example.convertersimple.ui.convert.ConverterScreen
+import com.example.convertersimple.ui.convert.ConverterViewModel
+import com.example.convertersimple.ui.result.ResultScreen
 import com.example.convertersimple.ui.theme.ConverterSimpleTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,9 +1,11 @@
-package com.example.convertersimple.features.convert.ui
+package com.example.convertersimple.ui.convert
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.convertersimple.features.convert.ConvertUseCase
-import com.example.convertersimple.features.convert.FetchCurrenciesUseCase
+import com.example.convertersimple.features.ConvertUseCase
+import com.example.convertersimple.features.FetchCurrenciesUseCase
+import com.example.convertersimple.ui.result.CurrencyUI
+import com.example.convertersimple.ui.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,9 +38,13 @@ class ConverterViewModel @Inject constructor(
     fun convertCurrency(sum: Double, base: String, exchange: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _convertState.value = convertUseCase(sum, base, exchange).fold(
-                onSuccess = { UiState.Content(CurrencyUI(
-                    sum, it, base, exchange)
-                ) },
+                onSuccess = {
+                    UiState.Content(
+                        CurrencyUI(
+                            sum, it, base, exchange
+                        )
+                    )
+                },
                 onFailure = { UiState.Error(it.message ?: "Something gone wrong") })
         }
     }

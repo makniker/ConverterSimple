@@ -1,4 +1,4 @@
-package com.example.convertersimple.features.convert.ui
+package com.example.convertersimple.ui.convert
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.convertersimple.ui.UiState
 import com.example.convertersimple.ui.NavigationScreen
 import com.example.convertersimple.ui.common.ContentLoading
 import com.example.convertersimple.ui.common.CurrencyInputField

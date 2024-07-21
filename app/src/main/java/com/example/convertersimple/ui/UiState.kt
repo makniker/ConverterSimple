@@ -1,4 +1,4 @@
-package com.example.convertersimple.features.convert.ui
+package com.example.convertersimple.ui
 
 sealed interface UiState<out T> {
     data class Content<T>(val data: T) : UiState<T>

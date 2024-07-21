@@ -1,4 +1,4 @@
-package com.example.convertersimple.features.convert.ui
+package com.example.convertersimple.ui.result
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,8 +14,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.convertersimple.ui.UiState
 import com.example.convertersimple.ui.common.ContentLoading
 import com.example.convertersimple.ui.common.ErrorScreen
+import com.example.convertersimple.ui.convert.ConverterViewModel
 import com.example.convertersimple.ui.theme.ConverterSimpleTheme
 
 @Composable
