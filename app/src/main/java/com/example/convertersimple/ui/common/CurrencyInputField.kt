@@ -26,9 +26,7 @@ fun CurrencyInputField(
     var expanded by remember { mutableStateOf(false) }
     var selectedCurrencyState by remember { mutableStateOf(selectedCurrency) }
     ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = it },
-        modifier = modifier.padding(8.dp)
+        expanded = expanded, onExpandedChange = { expanded = it }, modifier = modifier.padding(8.dp)
     ) {
         OutlinedTextField(
             modifier = Modifier.menuAnchor(),
@@ -40,11 +38,9 @@ fun CurrencyInputField(
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
         )
-        ExposedDropdownMenu(expanded = expanded,
-            onDismissRequest = {
-                expanded = false
-            })
-        {
+        ExposedDropdownMenu(expanded = expanded, onDismissRequest = {
+            expanded = false
+        }) {
             currencies.forEach { selectionOption ->
                 DropdownMenuItem(onClick = {
                     onSelectedCurrencyChanged(selectionOption)

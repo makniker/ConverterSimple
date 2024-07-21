@@ -1,3 +1,3 @@
 package com.example.convertersimple.features.convert.ui
 
-data class FetchedCurrencyUI(val name: String, val rate: Double)
+data class CurrencyUI(val sum: Double, val convertedSum: Double, val base: String, val exchange: String)

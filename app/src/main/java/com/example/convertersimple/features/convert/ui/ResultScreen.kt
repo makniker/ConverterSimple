@@ -20,36 +20,37 @@ import com.example.convertersimple.ui.theme.ConverterSimpleTheme
 
 @Composable
 fun ResultScreen(modifier: Modifier, navController: NavController, viewModel: ConverterViewModel) {
-    when(val state = viewModel.convertState.collectAsState().value) {
-        is ResultUiState.Content -> ResultContent(modifier, state)
-        is ResultUiState.Error -> ErrorScreen(modifier, state.error) {
+    when (val state = viewModel.convertState.collectAsState().value) {
+        is UiState.Content -> ResultContent(modifier, state)
+        is UiState.Error -> ErrorScreen(modifier, state.error) {
             navController.navigateUp()
         }
-        ResultUiState.Loading -> ContentLoading(modifier)
+
+        is UiState.Loading -> ContentLoading(modifier)
     }
 }
 
 @Composable
-fun ResultContent(modifier: Modifier, state: ResultUiState.Content) {
+fun ResultContent(modifier: Modifier, state: UiState.Content<CurrencyUI>) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "${state.convertedSum} ${state.exchange}",
+            text = "${state.data.convertedSum} ${state.data.exchange}",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ResultContentPreview() {
     ConverterSimpleTheme {
-        ResultContent(Modifier, ResultUiState.Content(100.0, 100.0, "USD", "RUB"))
+        ResultContent(Modifier, UiState.Content(CurrencyUI(100.0, 100.0, "USD", "RUB")))
     }
 }

@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.convertersimple.ui.theme.ConverterSimpleTheme
@@ -37,7 +38,10 @@ fun ErrorScreen(modifier: Modifier, errorMessage: String, onRetryButtonPressed: 
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = errorMessage, style = MaterialTheme.typography.titleLarge, color = Color.Red
+            text = errorMessage,
+            style = MaterialTheme.typography.titleLarge,
+            color = Color.Red,
+            textAlign = TextAlign.Center,
         )
         Spacer(modifier = Modifier.weight(1f))
         Button(onClick = onRetryButtonPressed, modifier = Modifier.fillMaxWidth()) {
@@ -51,9 +55,7 @@ fun ErrorScreen(modifier: Modifier, errorMessage: String, onRetryButtonPressed: 
 fun ContentErrorPreview() {
     ConverterSimpleTheme {
         ErrorScreen(
-            errorMessage = "Something went wrong",
-            onRetryButtonPressed = {},
-            modifier = Modifier
+            errorMessage = "Something went wrong", onRetryButtonPressed = {}, modifier = Modifier
         )
     }
 }

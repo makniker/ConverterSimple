@@ -44,30 +44,31 @@ fun ConverterScreen(
         .fillMaxSize()
     viewModel.fetchCurrencies()
     when (state) {
-        is ConverterUiState.Content -> ContentMain(
+        is UiState.Content -> ContentMain(
             state,
             { sum, base, exchange -> viewModel.convertCurrency(sum, base, exchange) },
             screenModifier,
             navController
         )
 
-        is ConverterUiState.Error -> ErrorScreen(screenModifier,
+        is UiState.Error -> ErrorScreen(
+            screenModifier,
             state.error,
         ) { viewModel.fetchCurrencies() }
 
-        ConverterUiState.Loading -> ContentLoading(screenModifier)
+        is UiState.Loading -> ContentLoading(screenModifier)
     }
 }
 
 @Composable
 fun ContentMain(
-    state: ConverterUiState.Content,
+    state: UiState.Content<ConverterUI>,
     onConvertButtonPressed: (sum: Double, base: String, exchange: String) -> Unit,
     modifier: Modifier = Modifier,
     navController: NavController,
 ) {
-    var selectedBaseCurrency by remember { mutableStateOf(state.currency[0]) }
-    var selectedExchangedCurrency by remember { mutableStateOf(state.currency[1]) }
+    var selectedBaseCurrency by remember { mutableStateOf(state.data.currencies[0]) }
+    var selectedExchangedCurrency by remember { mutableStateOf(state.data.currencies[1]) }
     var amount by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
     fun validate(text: String) {
@@ -89,7 +90,8 @@ fun ContentMain(
         Text(text = "Currency Converter", style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.weight(1f))
         Row {
-            OutlinedTextField(value = amount,
+            OutlinedTextField(
+                value = amount,
                 onValueChange = {
                     amount = it
                     validate(amount)
@@ -107,7 +109,7 @@ fun ContentMain(
                 modifier = Modifier.weight(1f),
                 selectedBaseCurrency,
                 { newText -> selectedBaseCurrency = newText },
-                currencies = state.currency
+                currencies = state.data.currencies
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -129,7 +131,7 @@ fun ContentMain(
                 modifier = Modifier.weight(1f),
                 selectedExchangedCurrency,
                 { newText -> selectedExchangedCurrency = newText },
-                currencies = state.currency
+                currencies = state.data.currencies
             )
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -159,8 +161,10 @@ fun ContentPreview() {
 fun ContentMainPreview() {
     fun mockFun(sum: Double, base: String, exchange: String) {}
     ConverterSimpleTheme {
-        ContentMain(ConverterUiState.Content(listOf("USD", "EUR", "RUB", "JPY", "GBP")),
-            { sum, base, exchange -> mockFun(sum, base, exchange) }, navController = rememberNavController()
+        ContentMain(
+            UiState.Content(ConverterUI(listOf("USD", "EUR", "RUB", "JPY", "GBP"))),
+            { sum, base, exchange -> mockFun(sum, base, exchange) },
+            navController = rememberNavController()
         )
     }
 }

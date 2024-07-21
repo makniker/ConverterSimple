@@ -9,7 +9,6 @@ interface CurrencyApi {
 
     @GET("latest")
     suspend fun getExchangeRate(
-        @Query("base_currency") base: String,
-        @Query("currencies") requestCurrency: String
+        @Query("base_currency") base: String, @Query("currencies") requestCurrency: String
     ): ExchangeRate
 }
