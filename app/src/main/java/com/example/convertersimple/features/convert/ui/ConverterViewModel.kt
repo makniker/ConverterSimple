@@ -2,10 +2,10 @@ package com.example.convertersimple.features.convert.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.convertersimple.data.RequestResult
 import com.example.convertersimple.features.convert.ConvertUseCase
 import com.example.convertersimple.features.convert.FetchCurrenciesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,21 +24,25 @@ class ConverterViewModel @Inject constructor(
     private val _convertState = MutableStateFlow(ResultUiState.Initial)
     val convertState: StateFlow<ResultUiState> = _convertState.asStateFlow()
 
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        throwable.printStackTrace()
+    }
+
     fun fetchCurrencies() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _uiState.value = when(val r = fetchCurrenciesUseCase()) {
-                is RequestResult.Error -> ConverterUiState.Error(r.message)
-                is RequestResult.Success -> ConverterUiState.Content(r.data)
-            }
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            _uiState.value =
+                fetchCurrenciesUseCase().fold(onSuccess = { ConverterUiState.Content(it) },
+                    onFailure = { ConverterUiState.Error(it.message ?: "Something gone wrong") })
         }
     }
 
     fun convertCurrency(sum: Double, base: String, exchange: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _convertState.value = when(val r = convertUseCase(sum, base, exchange)) {
-                is RequestResult.Error -> ResultUiState.Error(r.message)
-                is RequestResult.Success -> ResultUiState.Content(sum, r.data, base, exchange)
-            }
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            _convertState.value = convertUseCase(sum, base, exchange).fold(onSuccess = {
+                ResultUiState.Content(
+                    sum, it, base, exchange
+                )
+            }, onFailure = { ResultUiState.Error(it.message ?: "Something gone wrong") })
         }
     }
 }

@@ -24,10 +24,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
+            val viewModel: ConverterViewModel = viewModel()
             ConverterSimpleTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val navController = rememberNavController()
-                    val viewModel: ConverterViewModel = viewModel()
                     NavHost(navController = navController, startDestination = "main_screen") {
                         composable(NavigationScreen.ConverterScreen.route) {
                             ConverterScreen(

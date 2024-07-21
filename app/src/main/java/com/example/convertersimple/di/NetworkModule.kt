@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val BASE_URL = "https://api.freecurrencyapi.com/v1/"
+    private const val BASE_URL = "http://api.freecurrencyapi.com/v1/"
     @Singleton
     @Provides
     fun provideCurrencyApi(): CurrencyApi {
