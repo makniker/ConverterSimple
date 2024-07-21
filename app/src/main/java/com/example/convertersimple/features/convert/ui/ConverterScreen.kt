@@ -1,7 +1,5 @@
 package com.example.convertersimple.features.convert.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,6 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.convertersimple.ui.NavigationScreen
 import com.example.convertersimple.ui.common.ContentLoading
 import com.example.convertersimple.ui.common.CurrencyInputField
+import com.example.convertersimple.ui.common.ErrorScreen
 import com.example.convertersimple.ui.theme.ConverterSimpleTheme
 
 @Composable

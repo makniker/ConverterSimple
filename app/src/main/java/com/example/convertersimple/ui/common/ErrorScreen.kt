@@ -1,4 +1,4 @@
-package com.example.convertersimple.features.convert.ui
+package com.example.convertersimple.ui.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
