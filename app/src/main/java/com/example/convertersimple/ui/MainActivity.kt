@@ -8,13 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavType
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.convertersimple.features.convert.ui.ConverterScreen
-import com.example.convertersimple.features.convert.ui.ErrorScreen
+import com.example.convertersimple.features.convert.ui.ConverterViewModel
 import com.example.convertersimple.features.convert.ui.ResultScreen
 import com.example.convertersimple.ui.theme.ConverterSimpleTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,38 +27,22 @@ class MainActivity : ComponentActivity() {
             ConverterSimpleTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val navController = rememberNavController()
+                    val viewModel: ConverterViewModel = viewModel()
                     NavHost(navController = navController, startDestination = "main_screen") {
-                        composable("main_screen") {
+                        composable(NavigationScreen.ConverterScreen.route) {
                             ConverterScreen(
                                 modifier = Modifier.padding(innerPadding),
-                                navController = navController
+                                navController = navController,
+                                viewModel = viewModel,
                             )
                         }
                         composable(
-                            "main_screen/{value}/{currency}", arguments = listOf(
-                                navArgument("value") { type = NavType.FloatType },
-                                navArgument("currency") { type = NavType.StringType },
-                            )
-                        ) { backStackEntry ->
-                            val value = backStackEntry.arguments?.getFloat("value", 0f)
-                            val currency = backStackEntry.arguments?.getString("username")
+                            "${NavigationScreen.ConverterScreen.route}/${NavigationScreen.ResultScreen.route}",
+                        ) {
                             ResultScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 navController = navController,
-                                value!!,
-                                currency!!
-                            )
-                        }
-                        composable(
-                            "main_screen/error_screen?error={error}",
-                            arguments = listOf(navArgument("error") {
-                                defaultValue = "Something went wrong while fetching data"
-                            })
-                        ) { backStackEntry ->
-                            ErrorScreen(
-                                modifier = Modifier.padding(innerPadding),
-                                navController = navController,
-                                backStackEntry.arguments?.getString("error")!!
+                                viewModel = viewModel,
                             )
                         }
                     }

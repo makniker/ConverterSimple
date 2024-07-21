@@ -1,8 +1,10 @@
 package com.example.convertersimple.features.convert.ui
 
+import java.util.Currency
+
 sealed interface ConverterUiState {
 
-    class Content() : ConverterUiState
+    data class Content(val currency: List<String>) : ConverterUiState
 
     data class Error(val error: String, ) : ConverterUiState
 

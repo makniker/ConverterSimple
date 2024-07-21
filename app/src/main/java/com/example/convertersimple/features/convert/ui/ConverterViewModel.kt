@@ -15,11 +15,23 @@ class ConverterViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(ConverterUiState.Initial)
     val uiState: StateFlow<ConverterUiState> = _uiState.asStateFlow()
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {  _uiState.value = ConverterUiState.Content() }
+    private val _convertState = MutableStateFlow(ResultUiState.Initial)
+    val convertState: StateFlow<ResultUiState> = _convertState.asStateFlow()
+
+    fun fetchCurrencies() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _uiState.value = ConverterUiState.Content(listOf("USD", "EUR", "RUB", "JPY", "GBP"))
+        }
     }
 
-    fun convertCurrency(sum: Double, base: String, exchange: String): Double {
-        return 0.0
+    fun convertCurrency(sum: Double, base: String, exchange: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _convertState.value = ResultUiState.Content(
+                sum = sum,
+                convertedSum = sum * 2.5,
+                base = base,
+                exchange = exchange
+            )
+        }
     }
 }
