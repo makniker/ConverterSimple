@@ -5,12 +5,12 @@ import com.example.convertersimple.data.network.CurrencyInfo
 import javax.inject.Inject
 
 interface CurrencyRepository {
-    fun fetchCurrencyList(): List<CurrencyInfo>
+    suspend fun fetchCurrencyList(): List<CurrencyInfo>
     suspend fun exchangeValue(sum: Double, base: String, exchange: String): Double
 }
 
 class CurrencyRepositoryTestImpl : CurrencyRepository {
-    override fun fetchCurrencyList(): List<CurrencyInfo> {
+    override suspend fun fetchCurrencyList(): List<CurrencyInfo> {
         TODO()
     }
 
@@ -22,7 +22,7 @@ class CurrencyRepositoryTestImpl : CurrencyRepository {
 
 class CurrencyRepositoryImpl @Inject constructor(private val api: CurrencyApi) :
     CurrencyRepository {
-    override fun fetchCurrencyList(): List<CurrencyInfo> {
+    override suspend fun fetchCurrencyList(): List<CurrencyInfo> {
         TODO()
     }
 

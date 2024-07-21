@@ -4,8 +4,8 @@ import com.example.convertersimple.data.CurrencyRepository
 import com.example.convertersimple.data.RequestResult
 import javax.inject.Inject
 
-class ConvertUseCase @Inject constructor(private val repository: CurrencyRepository) {
-    suspend operator fun invoke(amount: Double, baseCurrency: String, exchangeCurrency: String): RequestResult<Double> {
+class FetchCurrenciesUseCase @Inject constructor(repository: CurrencyRepository) {
+    suspend operator fun invoke(): RequestResult<List<String>> {
         TODO()
     }
 }

@@ -8,6 +8,5 @@ typealias CurrenciesList = BaseResponse<HashMap<String, CurrencyInfo>>
 typealias ExchangeRate = BaseResponse<HashMap<String, Double>>
 
 data class CurrencyInfo(
-    @SerializedName("code") val code: String,
     @SerializedName("name_plural") val namePlural: String,
 )
