@@ -2,8 +2,11 @@ package com.example.convertersimple.ui.result
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +26,9 @@ import com.example.convertersimple.ui.theme.ConverterSimpleTheme
 @Composable
 fun ResultScreen(modifier: Modifier, navController: NavController, viewModel: ConverterViewModel) {
     when (val state = viewModel.convertState.collectAsState().value) {
-        is UiState.Content -> ResultContent(modifier, state)
+        is UiState.Content -> ResultContent(modifier, state) {
+            navController.navigateUp()
+        }
         is UiState.Error -> ErrorScreen(modifier, state.error) {
             navController.navigateUp()
         }
@@ -33,7 +38,7 @@ fun ResultScreen(modifier: Modifier, navController: NavController, viewModel: Co
 }
 
 @Composable
-fun ResultContent(modifier: Modifier, state: UiState.Content<CurrencyUI>) {
+fun ResultContent(modifier: Modifier, state: UiState.Content<CurrencyUI>, onBackButtonPressed: () -> Unit) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -41,11 +46,16 @@ fun ResultContent(modifier: Modifier, state: UiState.Content<CurrencyUI>) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.weight(1f))
         Text(
             text = "${state.data.convertedSum} ${state.data.exchange}",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
+        Spacer(modifier = Modifier.weight(1f))
+        Button(onClick = onBackButtonPressed, modifier = Modifier.fillMaxWidth()) {
+            Text(text = "Go back")
+        }
     }
 }
 
@@ -53,6 +63,6 @@ fun ResultContent(modifier: Modifier, state: UiState.Content<CurrencyUI>) {
 @Composable
 fun ResultContentPreview() {
     ConverterSimpleTheme {
-        ResultContent(Modifier, UiState.Content(CurrencyUI(100.0, 100.0, "USD", "RUB")))
+        ResultContent(Modifier, UiState.Content(CurrencyUI(100.0, 100.0, "USD", "RUB")), {})
     }
 }

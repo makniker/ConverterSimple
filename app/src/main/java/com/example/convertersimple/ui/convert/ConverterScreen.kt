@@ -103,7 +103,8 @@ fun ContentMain(
                     .weight(2f),
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 supportingText = { Text(text = if (isError) "Not a number" else "Must be number") },
-                isError = isError
+                isError = isError,
+                maxLines = 1,
             )
 
             CurrencyInputField(
